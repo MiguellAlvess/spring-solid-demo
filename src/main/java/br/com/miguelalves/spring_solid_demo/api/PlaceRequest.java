@@ -1,6 +1,6 @@
 package br.com.miguelalves.spring_solid_demo.api;
 
-import java.time.LocalDateTime;
+import jakarta.validation.constraints.NotBlank;
 
-public record PlaceRequest(String name, String state) {
+public record PlaceRequest(@NotBlank String name, @NotBlank String state) {
 }
