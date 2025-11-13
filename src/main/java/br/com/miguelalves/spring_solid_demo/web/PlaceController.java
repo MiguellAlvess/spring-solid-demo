@@ -3,10 +3,12 @@ package br.com.miguelalves.spring_solid_demo.web;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.miguelalves.spring_solid_demo.domain.Place;
+import br.com.miguelalves.spring_solid_demo.api.PlaceRequest;
+import br.com.miguelalves.spring_solid_demo.api.PlaceResponse;
 import br.com.miguelalves.spring_solid_demo.service.PlaceService;
 import reactor.core.publisher.Mono;
 
@@ -21,8 +23,8 @@ public class PlaceController {
     }
 
     @PostMapping
-    public ResponseEntity<Mono<Place>> create(Place place) {
-        var createdPlace = placeService.create(place);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdPlace);
+    public ResponseEntity<Mono<PlaceResponse>> create(@RequestBody PlaceRequest request) {
+        var placeResponse = placeService.create(request).map(PlaceMapper::fromPlaceToResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(placeResponse);
     }
 }
