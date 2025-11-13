@@ -35,4 +35,19 @@ class SpringSolidDemoApplicationTests {
 
 	}
 
+	@Test
+	public void shouldReturnBadRequestWhenNameIsAndStateIsEmpty() {
+		var name = "";
+		var state = "";
+
+		webTestClient
+				.post()
+				.uri("/places")
+				.bodyValue(
+						new PlaceRequest(name, state))
+				.exchange()
+				.expectStatus().isBadRequest();
+
+	}
+
 }
